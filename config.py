@@ -1,0 +1,26 @@
+DEBUG = True
+
+# 数据库配置
+MYSQL_NAME = 'bsops'
+MYSQL_HOST = '10.255.98.155'
+MYSQL_PORT = 3306
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = '123456'
+
+# redis 配置
+REDIS_HOST = '10.255.98.155'
+REDIS_PORT = 6379
+REDIS_PASS = '123456'
+
+CACHES_REDIS = f"redis://:{REDIS_PASS}@{REDIS_HOST}:{REDIS_PORT}/1"
+CHANNEL_REDIS = [f"redis://:{REDIS_PASS}@{REDIS_HOST}:{REDIS_PORT}/2"]
+
+
+# session存在时间 8小时
+BROWSER_TTL = 8 * 60 * 60
+
+# 上传最大限制
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600    # 设置为最大10M
+
+REGISTER_URL = "http://127.0.0.1:8080/register"
+
