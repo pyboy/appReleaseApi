@@ -43,13 +43,24 @@ class UserView(View):
         menu_data = json.loads(request.body)
         if menu_data.get('key') == 99999:
             parentId = Menus.objects.get(key=menu_data.get('parentId'))
+            print(parentId)
             # 删除父级菜单
             menu_data.pop('parentId', None)
             # 删除key值
             menu_data.pop('key', None)
             new_menu = Menus.objects.create(**menu_data)
             new_menu.parentId_id = parentId
+            new_menu.save()
         else:
+
             menu_data.pop('children', None)
             Menus.objects.filter(key=menu_data.get('key')).update(**menu_data)
         return ReTurn200({})
+
+    def delete(self, request):
+
+        menu_data = json.loads(request.body)
+        
+        result = Menus.objects.filter(key=menu_data.get('key')).delete()
+        print(result)
+        return ReTurn200("删除成功")

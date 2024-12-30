@@ -1,6 +1,8 @@
 from django.shortcuts import HttpResponse
 from json import JSONEncoder, dumps
 import datetime
+from django.utils.deprecation import MiddlewareMixin
+
 
 class DateEncoder(JSONEncoder):
     def default(self, obj):
@@ -12,12 +14,21 @@ class DateEncoder(JSONEncoder):
         else:
             return JSONEncoder.default(self, obj)
 
-def ReTurn200(data, msg=None):
+def ReTurn200(data):
 
     return HttpResponse(
         dumps({
             'code': 200,
-            'data': data,
-            'msg': msg
+            'data': data
         }, cls=DateEncoder)
     )
+
+
+class DisableCSRF(MiddlewareMixin):
+    def process_response(self, request, response):
+
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Headers"] = "*"
+        response["Access-Control-Allow-Methods"] = "*"
+
+        return response
